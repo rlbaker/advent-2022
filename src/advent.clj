@@ -7,11 +7,10 @@
 
 (defn lines
   [filename]
-  (let [input (read-input filename)]
-    (str/split-lines input)))
+  (str/split-lines
+    (read-input filename)))
 
 (defn groups
   [filename]
-  (let [input (read-input filename)]
-    (map str/split-lines
-      (str/split input #"\n\n"))))
+  (map str/split-lines
+     (str/split (read-input filename) #"\n\n")))
