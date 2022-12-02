@@ -11,8 +11,8 @@
             "B" {"X" 1 "Y" 5 "Z" 9}
             "C" {"X" 2 "Y" 6 "Z" 7}})
 
-(defn sum-scores [part idxs]
-  (reduce + (map #(get-in part %) idxs)))
+(defn sum-scores [scores rounds]
+  (reduce + (map #(get-in scores %) rounds)))
 
 (println (sum-scores part1 input))
 (println (sum-scores part2 input))
