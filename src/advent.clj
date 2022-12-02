@@ -5,12 +5,17 @@
   [filename]
   (slurp (str "data/" filename)))
 
-(defn lines
-  [filename]
+(defn split-fields [s] (str/split s #" "))
+(defn split-groups [s] (str/split s #"\n\n"))
+
+(defn lines [filename]
   (str/split-lines
     (read-input filename)))
 
-(defn groups
-  [filename]
+(defn groups [filename]
   (map str/split-lines
-     (str/split (read-input filename) #"\n\n")))
+       (split-groups (read-input filename))))
+
+(defn matrix [filename]
+  (map split-fields
+       (lines filename)))
