@@ -1,21 +1,7 @@
-(ns advent
-  (:require [clojure.string :as str]))
-
-(defn read-input
-  [filename]
-  (slurp (str "data/" filename)))
+(ns advent (:require [clojure.string :as str]))
 
 (defn split-fields [s] (str/split s #" "))
 (defn split-groups [s] (str/split s #"\n\n"))
-
-(defn lines [filename]
-  (str/split-lines
-    (read-input filename)))
-
-(defn groups [filename]
-  (map str/split-lines
-       (split-groups (read-input filename))))
-
-(defn matrix [filename]
-  (map split-fields
-       (lines filename)))
+(defn lines [input] (str/split-lines input))
+(defn groups [input] (map str/split-lines (split-groups input)))
+(defn fields [input] (map split-fields (str/split-lines input)))

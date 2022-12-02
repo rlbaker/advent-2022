@@ -1,7 +1,7 @@
 (ns day2 (:require advent))
 
-(def example (advent/matrix "day2.example"))
-(def input (advent/matrix "day2.input"))
+(def example (advent/fields (slurp "data/day2.example")))
+(def input (advent/fields (slurp "data/day2.input")))
 
 (def part1 {"A" {"X" 4 "Y" 8 "Z" 3}
             "B" {"X" 1 "Y" 5 "Z" 9}
