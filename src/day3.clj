@@ -1,7 +1,9 @@
-(ns day3 (:require advent clojure.set))
+(ns day3
+  (:require [clojure.string :as str]
+            [clojure.set :as cset]))
 
-(def example (advent/lines (slurp "data/day3.example")))
-(def input (advent/lines (slurp "data/day3.input")))
+(def example (str/split-lines (slurp "data/day3.example")))
+(def input (str/split-lines (slurp "data/day3.input")))
 
 (defn priority [ch]
   (let [c (int (first ch))]
@@ -11,7 +13,7 @@
 
 (defn item [bag]
   (let [n (/ (count bag) 2)]
-   (clojure.set/intersection
+   (cset/intersection
     (set (take n bag))
     (set (drop n bag)))))
 

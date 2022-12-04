@@ -1,7 +1,8 @@
-(ns day1 (:require advent))
+(ns day1
+  (:require [advent]))
 
-(def example (advent/groups (slurp "data/day1.example")))
-(def input (advent/groups (slurp "data/day1.input")))
+(def example (advent/split-groups (slurp "data/day1.example")))
+(def input (advent/split-groups (slurp "data/day1.input")))
 
 (defn sum-group [group] (reduce + (map parse-long group)))
 

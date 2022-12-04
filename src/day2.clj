@@ -1,7 +1,8 @@
-(ns day2 (:require advent))
+(ns day2
+  (:require [advent]))
 
-(def example (advent/fields (slurp "data/day2.example")))
-(def input (advent/fields (slurp "data/day2.input")))
+(def example (advent/split-fields (slurp "data/day2.example")))
+(def input (advent/split-fields (slurp "data/day2.input")))
 
 (def part1
   {"A" {"X" 4 "Y" 8 "Z" 3}
