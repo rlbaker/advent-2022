@@ -18,10 +18,6 @@
     [(parse-stacks (drop-last 1 (str/split-lines stacks)))
      (map split-cmd (str/split-lines cmds))]))
 
-(let [[stacks cmds] (parse (slurp "data/day5.input"))]
-  (def stacks stacks)
-  (def cmds cmds))
-
 (defn move-blocks [stacks n from-idx to-idx movef]
   (movef n (@stacks from-idx) (@stacks to-idx)))
 
@@ -34,8 +30,8 @@
         (swap! stacks assoc to-idx to)))
     @stacks))
 
-(defn to-str [results]
-  (apply str (map first results)))
+(defn to-str [stacks]
+  (apply str (map first stacks)))
 
 (defn move-each [n from to]
   [(drop n from) (into to (take n from))])
@@ -43,5 +39,7 @@
 (defn move-all [n from to]
   [(drop n from) (concat (take n from) to)])
 
-(println (to-str (run stacks cmds move-each))) ; part 1
-(println (to-str (run stacks cmds move-all))) ; part 2
+(let [[stacks cmds] (parse (slurp "data/day5.input"))]
+  (println (to-str (run stacks cmds move-each))) ; part 1
+  (println (to-str (run stacks cmds move-all)))) ; part 2
+
