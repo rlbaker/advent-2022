@@ -23,18 +23,16 @@
   (def cmds cmds))
 
 (defn move-blocks [stacks n from-idx to-idx movef]
-  (let [stacks (deref stacks)]
-    (movef n (stacks from-idx) (stacks to-idx))))
+  (movef n (@stacks from-idx) (@stacks to-idx)))
 
 (defn run [stacks cmds movef]
-  (let [stacks (ref stacks)]
-    (dosync
-      (doseq [cmd cmds]
-        (let [[n from-idx to-idx] cmd
-              [from to] (move-blocks stacks n from-idx to-idx movef)]
-          (alter stacks assoc from-idx from)
-          (alter stacks assoc to-idx to)))
-      (deref stacks))))
+  (let [stacks (atom stacks)]
+    (doseq [cmd cmds]
+      (let [[n from-idx to-idx] cmd
+            [from to] (move-blocks stacks n from-idx to-idx movef)]
+        (swap! stacks assoc from-idx from)
+        (swap! stacks assoc to-idx to)))
+    @stacks))
 
 (defn to-str [results]
   (apply str (map first results)))
