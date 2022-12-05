@@ -1,20 +1,20 @@
 (ns day1
-  (:require [advent]))
+  (:require [clojure.string :as str]))
 
-(def example (advent/split-groups (slurp "data/day1.example")))
-(def input (advent/split-groups (slurp "data/day1.input")))
+(def input
+  (map str/split-lines
+       (str/split (slurp "data/day1.input") #"\n\n")))
 
-(defn sum-group [group] (reduce + (map parse-long group)))
+(defn sum-cals [cals]
+  (reduce + (map parse-long cals)))
 
 (defn sum-top [n input]
   (->> input
-       (map sum-group)
-       (sort)
-       (take-last n)
-       (apply +)))
+       (map sum-cals)
+       (sort-by -)
+       (take n)
+       (reduce +)
+       println))
 
-(defn part1 [input] (sum-top 1 input))
-(defn part2 [input] (sum-top 3 input))
-
-(println (part1 input))
-(println (part2 input))
+(sum-top 1 input) ; part 1
+(sum-top 3 input) ; part 2

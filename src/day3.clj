@@ -2,7 +2,6 @@
   (:require [clojure.string :as str]
             [clojure.set :as cset]))
 
-(def example (str/split-lines (slurp "data/day3.example")))
 (def input (str/split-lines (slurp "data/day3.input")))
 
 (defn priority [ch]
@@ -11,7 +10,7 @@
       (- c 96)
       (- c 38))))
 
-(defn item [bag]
+(defn find-item [bag]
   (let [n (/ (count bag) 2)]
    (cset/intersection
     (set (take n bag))
@@ -19,18 +18,17 @@
 
 (defn part1 [input]
   (->> input
-       (map item)
+       (map find-item)
        (map priority)
        (reduce +)))
 
 (defn part2 [input]
   (->> input
-       (map set)
+       (map set input)
        (partition 3)
-       (map (partial apply clojure.set/intersection))
+       (map (partial apply cset/intersection))
        (map priority)
        (reduce +)))
 
 (println (part1 input))
 (println (part2 input))
-
