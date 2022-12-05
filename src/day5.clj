@@ -22,12 +22,6 @@
   (def stacks stacks)
   (def cmds cmds))
 
-(defn move-each [n from to]
-  [(drop n from) (into to (take n from))])
-
-(defn move-all [n from to]
-  [(drop n from) (concat (take n from) to)])
-
 (defn move-blocks [stacks n from-idx to-idx movef]
   (let [stacks (deref stacks)]
     (movef n (stacks from-idx) (stacks to-idx))))
@@ -44,6 +38,12 @@
 
 (defn to-str [results]
   (apply str (map first results)))
+
+(defn move-each [n from to]
+  [(drop n from) (into to (take n from))])
+
+(defn move-all [n from to]
+  [(drop n from) (concat (take n from) to)])
 
 (println (to-str (run stacks cmds move-each))) ; part 1
 (println (to-str (run stacks cmds move-all))) ; part 2
