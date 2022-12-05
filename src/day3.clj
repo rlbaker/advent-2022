@@ -24,7 +24,7 @@
 
 (defn part2 [input]
   (->> input
-       (map set input)
+       (map set)
        (partition 3)
        (map (partial apply cset/intersection))
        (map priority)
