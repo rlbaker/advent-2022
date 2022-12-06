@@ -2,16 +2,14 @@
 
 (def input (slurp "data/day6.input"))
 
-(defn zip [groups] (map vector (range) groups))
+(defn has-dup [[_ lst]]
+  (< (count (set lst)) (count lst)))
 
-(defn match [group]
-  (let [[n g] group]
-    (< (count (set g)) (count g))))
+(defn search [window]
+  (->> (partition window 1 input)
+       (map-indexed #(vector (+ %1 window) %2))
+       (drop-while has-dup)
+       (first)))
 
-(defn search [len]
-  (let [groups (zip (partition len 1 input))
-        [n _] (first (drop-while match groups))]
-    (+ n len)))
-
-(println (search 4)) ; part1
-(println (search 14)) ; part2
+(let [[n _] (search 4)] (println n))
+(let [[n _] (search 14)] (println n))
