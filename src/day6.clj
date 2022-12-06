@@ -2,8 +2,7 @@
 
 (def input (slurp "data/day6.input"))
 
-(defn has-dup [[_ lst]]
-  (< (count (set lst)) (count lst)))
+(defn has-dup [[_ lst]] (< (count (set lst)) (count lst)))
 
 (defn search [window]
   (->> (partition window 1 input)
