@@ -6,7 +6,7 @@
 
 (defn search [window]
   (->> (partition window 1 input)
-       (map-indexed #(vector (+ %1 window) %2))
+       (map-indexed #(vector (+ window %1) %2))
        (drop-while has-dup)
        (first)))
 
