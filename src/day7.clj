@@ -80,12 +80,12 @@
     (+ sum size)
     sum))
 
-;part 1
-(println (reduce sum-smallest 0 sums))
-
 (def min-size (- 30000000 (- 70000000 (get sums "/"))))
 (defn sizes [[_ size]] (>= size min-size))
 (defn compare-size [[_ a] [_ b]] compare a b)
+
+;part 1
+(println (reduce sum-smallest 0 sums))
 
 ; part 2
 (println (->> sums
