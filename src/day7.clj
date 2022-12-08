@@ -1,4 +1,4 @@
-(ns day7-new
+(ns day7
   (:require [clojure.string :as str]))
 
 (def input (->> "data/day7.input"
