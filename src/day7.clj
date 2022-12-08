@@ -1,95 +1,63 @@
-(ns day7
+(ns day7-new
   (:require [clojure.string :as str]))
 
-(def input (slurp "data/day7.input"))
+(def input (->> "data/day7.input"
+                (slurp)
+                (str/split-lines)
+                (map #(str/split % #" "))))
 
-(defn split
-  [lines]
-  (map #(str/split % #" ") lines))
-
-(defn parse-cmds
-  [[input & output]]
-  (let [[cmd path] input]
-    (cond
-      (= cmd "cd") [:cd path]
-      (= cmd "ls") (conj output :ls))))
-
-(defn parse-lines
-  [input]
-  (->> (str/split input #"\$ ")
-       (drop 1)
-       (map str/split-lines)
-       (map split)))
-
-(defn update-pos
-  [pos [dir]]
-  (if (= dir "..")
-    (pop pos)
+(defn update-pos [pos dir]
+  (case dir
+    ".." (pop pos)
     (conj pos dir)))
 
-(defn no-dirs [[info _]] (not= info "dir"))
+(defn add-size [fs pos size]
+  (if (empty? pos)
+    fs
+    (let [path (str/join "/" pos)
+          fs (update fs path #(vec (conj % size)))]
+      (recur fs (pop pos) size))))
 
-(defn update-fs
-  [fs pos data]
-  (->> data
-       (filter no-dirs)
-       (map #(vector pos (parse-long (first %))))
-       (reduce concat fs)))
+(defn update-fs [fs pos [line & tail :as lines]]
+  (if (nil? line) [fs pos nil]
+    (let [[a _] line]
+      (case a
+        "$" [fs pos lines]
+        "dir" (recur fs pos tail)
+        (recur (add-size fs pos (parse-long a)) pos tail)))))
 
-(defn parse-fs
-  [cmds]
-  (loop [fs []
-         pos []
-         [[cmd & data] & cmds] cmds]
-    (cond
-      (= 0 (count cmds))
-      (partition 2 fs)
+(defn process-line
+  [fs pos [a b dir] tail]
+  (case [a b]
+    ["$" "cd"] [fs (update-pos pos dir) tail]
+    ["$" "ls"] (update-fs fs pos tail)))
 
-      (= cmd :cd)
-      (let [pos (update-pos pos data)]
-        (recur fs pos cmds))
+(defn process
+  [[fs pos [line & tail]]]
+  (if (nil? line) fs
+    (recur (process-line fs pos line tail))))
 
-      (= cmd :ls)
-      (let [fs (update-fs fs pos data)]
-        (recur fs pos cmds)))))
+(defn sum-vals [[path sizes]] [path (reduce + sizes)])
 
-(defn update-sums
-  [sums dir size]
-  (assoc sums dir (+ size (get sums dir 0))))
+(def dir-sizes (->> [{} [] input]
+                    (process)
+                    (map sum-vals)
+                    (into {})))
 
-(defn sum-paths
-  [sums [paths size]]
-  (loop [sums sums
-         parts paths]
-    (if (<= (count parts) 0) sums
-      (let [dir (str/join "/" parts)]
-        (recur (update-sums sums dir size) (drop-last 1 parts))))))
-
-(defn fs-sum [fs] (reduce sum-paths {} fs))
-
-(def sums
-  (->> input
-       (parse-lines)
-       (map parse-cmds)
-       (parse-fs)
-       (fs-sum)))
-
-(defn sum-smallest
-  [sum [_ size]]
+; ; part 1
+(defn sum-smallest [sum [_ size]]
   (if (< size 100000)
     (+ sum size)
     sum))
+(println (reduce sum-smallest 0 dir-sizes))
 
-(def min-size (- 30000000 (- 70000000 (get sums "/"))))
-(defn sizes [[_ size]] (>= size min-size))
+; ; part 2
+(def min-size (- 30000000 (- 70000000 (get dir-sizes "/"))))
+(defn large [[_ size]] (>= size min-size))
 (defn compare-size [[_ a] [_ b]] compare a b)
 
-;part 1
-(println (reduce sum-smallest 0 sums))
-
-; part 2
-(println (->> sums
-             (filter sizes)
-             (sort compare-size)
-             (first)
-             (second)))
+(println (->> dir-sizes
+              (filter large)
+              (sort compare-size)
+              (first)
+              (second)))

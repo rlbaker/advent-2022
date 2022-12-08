@@ -16,5 +16,5 @@
        (reduce +)
        println))
 
-(sum-top 1 input) ; part 1
-(sum-top 3 input) ; part 2
+(println (sum-top 1 input)) ; part 1
+(println (sum-top 3 input)) ; part 2
