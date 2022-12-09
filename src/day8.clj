@@ -15,7 +15,7 @@
 (def indexes
   (for [y (range 1 n)
         x (range 1 n)]
-    [x y]))
+    [y x]))
 
 (defn up [[y x]] [(- y 1) x])
 (defn down [[y x]] [(+ y 1) x])
