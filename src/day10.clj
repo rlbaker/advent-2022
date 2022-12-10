@@ -43,5 +43,5 @@
         (recur new-crt states))))
 
 ; part 2
-(for [row (draw crt cpu-states)]
+(doseq [row (draw crt cpu-states)]
   (println (str row)))
