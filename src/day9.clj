@@ -40,17 +40,15 @@
      (let [new-t (move-tail (last acc) h)]
        (recur knots dir (conj acc new-t))))))
 
-(defn move [knots [dir steps] pos]
+(defn move [[dir steps] [pos knots]]
   (if (= steps 0) [pos knots]
-    (let [new-knots (move-knots knots dir)]
-      (recur new-knots
-             [dir (- steps 1)]
-             (conj pos (last new-knots))))))
+    (let [new-knots (move-knots knots dir)
+          pos (conj pos (last new-knots))]
+      (recur [dir (- steps 1)] [pos new-knots]))))
 
 (defn run [[cmd & cmds] [pos knots]]
-  (if (nil? cmd)
-    (count pos)
-    (recur cmds (move knots cmd pos))))
+  (if (nil? cmd) (count pos)
+    (recur cmds (move cmd [pos knots]))))
 
 (def part1 (vec (repeat 2 [0 0])))
 (println (run input [#{} part1]))
