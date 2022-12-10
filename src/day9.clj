@@ -16,10 +16,11 @@
     (math/sqrt (+ (* x x) (* y y)))))
 
 (defn move-head [[hx hy] dir]
-  (case dir :R [(+ hx 1) hy]
-            :U [hx (+ hy 1)]
-            :L [(- hx 1) hy]
-            :D [hx (- hy 1)]))
+  (case dir
+    :R [(+ hx 1) hy]
+    :U [hx (+ hy 1)]
+    :L [(- hx 1) hy]
+    :D [hx (- hy 1)]))
 
 (defn clamp [t h]
   (let [delta (- h t)
