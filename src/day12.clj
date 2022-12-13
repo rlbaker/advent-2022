@@ -31,8 +31,8 @@
 
 (defn to-int [c]
   (case c
-    \S 96
-    \E 123
+    \S 97
+    \E 122
     (int c)))
 
 (defn invalid-step? [from to]
