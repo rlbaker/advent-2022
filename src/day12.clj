@@ -47,7 +47,7 @@
 (defn with-true [coll] (zipmap coll (repeat true))) 
 (defn with-dist [coll d] (map vector coll (repeat (+ d 1))))
 
-(defn find-path-new [start]
+(defn find-path [start]
   (loop [visits {start true}
          [[pos dist] & t :as q] [[start 0]]]
     (cond
@@ -59,7 +59,7 @@
               (recur new-visits new-q)))))
 
 ; part 1
-(println (find-path-new start))
+(println (find-path start))
 
 ; part 2
-(println (first (remove nil? (sort (map find-path-new a-starts)))))
+(println (first (remove nil? (sort (map find-path a-starts)))))
