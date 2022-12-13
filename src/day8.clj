@@ -1,11 +1,11 @@
 (ns day8
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as string]))
 
 (defn digits [coll] (map #(Character/digit % 10) coll))
 
 (def input
   (->> (slurp "data/day8.input")
-       (str/split-lines)
+       (string/split-lines)
        (map digits)
        (map vec)
        (vec)))

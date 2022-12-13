@@ -1,13 +1,13 @@
 (ns day13
-  (:require [clojure.string :as str]
+  (:require [clojure.string :as string]
             [clojure.edn :as edn]))
 
-(defn split-groups [s] (str/split s #"\n\n"))
+(defn split-groups [s] (string/split s #"\n\n"))
 (defn parse-lists [coll] (map edn/read-string coll))
 
 (def input (->> (slurp "data/day13.input")
                 (split-groups)
-                (map str/split-lines)
+                (map string/split-lines)
                 (map parse-lists)))
 
 (def n (count input))

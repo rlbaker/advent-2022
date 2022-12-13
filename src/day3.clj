@@ -1,8 +1,8 @@
 (ns day3
-  (:require [clojure.string :as str]
+  (:require [clojure.string :as string]
             [clojure.set :as cset]))
 
-(def input (str/split-lines (slurp "data/day3.input")))
+(def input (string/split-lines (slurp "data/day3.input")))
 
 (defn priority [ch]
   (let [c (int (first ch))]

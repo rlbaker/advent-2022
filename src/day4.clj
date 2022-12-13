@@ -1,8 +1,8 @@
 (ns day4
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as string]))
 
-(def example (str/split-lines (slurp "data/day4.example")))
-(def input (str/split-lines (slurp "data/day4.input")))
+(def example (string/split-lines (slurp "data/day4.example")))
+(def input (string/split-lines (slurp "data/day4.input")))
 
 (defn part1 [s1 e1 s2 e2]
   (or (and (<= s1 s2) (>= e1 e2))
@@ -13,7 +13,7 @@
 
 (defn run [part input]
   (->> input
-     (map #(str/split % #"[,-]"))
+     (map #(string/split % #"[,-]"))
      (map #(map parse-long %))
      (filter #(apply part %))
      (count)))

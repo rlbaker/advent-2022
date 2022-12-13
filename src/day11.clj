@@ -1,12 +1,12 @@
 (ns day11
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as string]))
 
-(defn split-groups [s] (str/split s #"\n\n"))
+(defn split-groups [s] (string/split s #"\n\n"))
 
 (def input 
   (->> (slurp "data/day11.input")
        (split-groups)
-       (map str/split-lines)))
+       (map string/split-lines)))
 
 (defn parse-num [s] (parse-long (re-find #"\d+" s)))
 (defn parse-items [s] (mapv parse-long (re-seq #"\d+" s)))

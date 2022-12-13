@@ -1,10 +1,10 @@
 (ns day10
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as string]))
 
 (def input (->> "data/day10.input"
                 (slurp)
-                (str/split-lines)
-                (map #(str/split % #" "))))
+                (string/split-lines)
+                (map #(string/split % #" "))))
 
 (defn lookup-cycles [[c _]] (contains? #{20 60 100 140 180 220} c))
 
