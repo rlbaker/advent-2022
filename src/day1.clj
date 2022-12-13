@@ -13,8 +13,7 @@
        (map sum-cals)
        (sort-by -)
        (take n)
-       (reduce +)
-       println))
+       (reduce +)))
 
 (println (sum-top 1 input)) ; part 1
 (println (sum-top 3 input)) ; part 2
