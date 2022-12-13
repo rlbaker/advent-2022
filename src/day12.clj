@@ -9,22 +9,19 @@
 (def height (count input))
 (def width (count (first input)))
 
-(def m (into (sorted-map)
-             (for [y (range height)
-                   x (range width)]
-               [[y x] (get-in input [y x])])))
+(def m (into {} (for [y (range height)
+                      x (range width)]
+                  [[y x] (get-in input [y x])])))
 
-(defn is-start [k] (= (get m k) \S))
-(def start (first (filter is-start (keys m))))
-
-(defn is-end [k] (= (get m k) \E))
-(def end (first (filter is-end (keys m))))
-
-(defn is-a [k] (= (get m k) \a))
-(def a-starts (filter is-a (keys m)))
+(def start (first (filter #(= (m %) \S) (keys m))))
+(def end (first (filter #(= (m %) \E) (keys m))))
+(def a-starts (filter #(= (m %) \a) (keys m)))
 
 (defn adjacent [[y x]]
-  [[(dec y) x] [y (dec x)] [(inc y) x] [y (inc x)]])
+  [[(dec y) x]
+   [y (dec x)]
+   [(inc y) x]
+   [y (inc x)]])
 
 (defn oob? [[y x]]
   (or (< y 0) (>= y height) (< x 0) (>= x width)))
@@ -45,27 +42,24 @@
   (remove #(or (visits %)
                (oob? %)
                (invalid-step? pos %))
-         (adjacent pos)))
+          (adjacent pos)))
 
-(def visits-init (into (sorted-map) (map vector (keys m) (repeat false))))
-
-(defn with-true [coll] (map vector coll (repeat true)))
+(defn with-true [coll] (zipmap coll (repeat true))) 
 (defn with-dist [coll d] (map vector coll (repeat (+ d 1))))
 
-(defn find-path [start]
-  (loop [visits (assoc visits-init start true)
-         [h & t :as q] [[start 0]]]
-    (let [[pos d] h]
-      (cond
-        (= pos end) d
-        (empty? q) nil
-        :else (let [adj (next-valid pos visits)
-                    new-visits (into visits (with-true adj))
-                    t (into [] (concat t (with-dist adj d)))]
-                (recur new-visits t))))))
+(defn find-path-new [start]
+  (loop [visits {start true}
+         [[pos dist] & t :as q] [[start 0]]]
+    (cond
+      (empty? q) nil
+      (= pos end) dist
+      :else (let [adj (next-valid pos visits)
+                  new-visits (merge visits (with-true adj))
+                  new-q (vec (concat t (with-dist adj dist)))]
+              (recur new-visits new-q)))))
 
 ; part 1
-(println (find-path start))
+(println (find-path-new start))
 
 ; part 2
-(println (first (remove nil? (sort (map find-path a-starts)))))
+(println (first (remove nil? (sort (map find-path-new a-starts)))))
