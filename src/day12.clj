@@ -68,4 +68,4 @@
 (println (find-path start))
 
 ; part 2
-; (println (first (remove nil? (sort (map find-path a-starts)))))
+(println (first (remove nil? (sort (map find-path a-starts)))))
