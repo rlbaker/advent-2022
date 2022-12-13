@@ -39,7 +39,7 @@
   (let [a (to-int (m from))
         b (to-int (m to))
         d (- b a)]
-    (< 1 d)))
+    (> d 1)))
 
 (defn next-valid [pos visits]
   (remove #(or (visits %)
@@ -68,4 +68,4 @@
 (println (find-path start))
 
 ; part 2
-(println (first (remove nil? (sort (map find-path a-starts)))))
+; (println (first (remove nil? (sort (map find-path a-starts)))))
