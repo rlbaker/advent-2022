@@ -26,24 +26,24 @@
                        (or (= x 0) (= x n))))
 
 (defn visible
-  ([idx h _ movef]
-   (let [idx (movef idx)]
-     (cond
-       (>= (get-in input idx) h) false
-       (edge idx) true
-       :else (recur idx h 0 movef)))))
+  [idx h _ movef]
+  (let [idx (movef idx)]
+    (cond
+      (>= (get-in input idx) h) false
+      (edge idx) true
+      :else (recur idx h 0 movef))))
 
 (defn score
-  ([idx h acc movef]
-   (let [idx (movef idx)]
-     (cond
-       (>= (get-in input idx) h) acc
-       (edge idx) acc
-       :else (recur idx h (+ acc 1) movef)))))
+  [idx h acc movef]
+  (let [idx (movef idx)]
+    (cond
+      (>= (get-in input idx) h) acc
+      (edge idx) acc
+      :else (recur idx h (+ acc 1) movef))))
 
 (defn march [marchf idx]
   (let [h (get-in input idx)]
-    (map #(marchf idx h 0 %) [up down left right])))
+    (map #(marchf idx h 1 %) [up down left right])))
 
 (def part1
   (->> (for [idx indexes] (march visible idx))
