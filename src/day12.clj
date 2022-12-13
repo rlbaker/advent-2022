@@ -54,8 +54,7 @@
 
 (defn find-path [start]
   (loop [visits (assoc visits-init start true)
-         [h & t :as q] [[start 0]]
-         min-steps 10]
+         [h & t :as q] [[start 0]]]
     (let [[pos d] h]
       (cond
         (= pos end) d
@@ -63,7 +62,7 @@
         :else (let [adj (next-valid pos visits)
                     new-visits (into visits (with-true adj))
                     t (into [] (concat t (with-dist adj d)))]
-                (recur new-visits t min-steps))))))
+                (recur new-visits t))))))
 
 ; part 1
 (println (find-path start))
