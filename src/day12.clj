@@ -1,5 +1,5 @@
-(ns day12 (:require [clojure.string :as str]
-                    [clojure.pprint]))
+(ns day12
+  (:require [clojure.string :as str]))
 
 (def input
   (->> (slurp "data/day12.input")
