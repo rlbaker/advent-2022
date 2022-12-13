@@ -47,20 +47,6 @@
                (invalid-step? pos %))
          (adjacent pos)))
 
-(defn walk []
-  (loop [pos start
-         path [start]
-         visits #{start}]
-    (when (< (count path) 10) (println path))
-    (if (= pos end)
-      path
-      (let [adj (next-valid pos visits)]
-        (if (empty? adj)
-          (let [next-path (pop path)]
-            (recur (peek next-path) next-path visits))
-          (let [next-pos (rand-nth adj)]
-            (recur next-pos (conj path next-pos) (conj visits pos))))))))
-
 (def visits-init (into (sorted-map) (map vector (keys m) (repeat false))))
 
 (defn with-true [coll] (map vector coll (repeat true)))
