@@ -20,11 +20,11 @@
     (and (coll? a) (number? b)) (check a [b])
     (and (nil? a) (nil? b)) nil
     (and (coll? a) (coll? b)) (loop [[result & tail] (map check a b)]
-                                (condp = result
-                                  -1 result
-                                  1 result
-                                  nil (check (count a) (count b))
-                                  0 (recur tail)))))
+                                (cond
+                                  (= result -1) -1
+                                  (= result 1) 1
+                                  (nil? result) (check (count a) (count b))
+                                  (zero? result) (recur tail)))))
 
 ; part 1
 (println (->> input
