@@ -1,13 +1,13 @@
 (ns day9
-  (:require [clojure.string :as string]
+  (:require [clojure.string :as s]
             [clojure.math :as math]))
 
 (defn to-cmd [[dir dist]] [(keyword dir) (parse-long dist)])
 
 (def input
   (->> (slurp "data/day9.input")
-       (string/split-lines)
-       (map #(string/split % #" "))
+       (s/split-lines)
+       (map #(s/split % #" "))
        (map to-cmd)))
 
 (defn dist [[x1 y1] [x2 y2]]

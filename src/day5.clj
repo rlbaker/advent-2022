@@ -1,5 +1,5 @@
 (ns day5
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as s]))
 
 (defn read-blocks [line] (mapv (vec line) (range 1 (count line) 4)))
 (defn clean [col] (drop-while #(= \space %) col))
@@ -9,14 +9,14 @@
             (map clean))))
 
 (defn split-cmd [line]
-  (let [parts (vec (string/split line #" "))
+  (let [parts (vec (s/split line #" "))
         [n from to] (map parse-long (mapv parts [1 3 5]))]
     [n (- from 1) (- to 1)]))
 
 (defn parse [input]
-  (let [[stacks cmds] (string/split input #"\n\n")]
-    [(parse-stacks (drop-last 1 (string/split-lines stacks)))
-     (map split-cmd (string/split-lines cmds))]))
+  (let [[stacks cmds] (s/split input #"\n\n")]
+    [(parse-stacks (drop-last 1 (s/split-lines stacks)))
+     (map split-cmd (s/split-lines cmds))]))
 
 (defn move-blocks [stacks n from-idx to-idx movef]
   (movef n (@stacks from-idx) (@stacks to-idx)))

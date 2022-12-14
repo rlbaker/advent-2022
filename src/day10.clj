@@ -1,10 +1,10 @@
 (ns day10
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as s]))
 
 (def input (->> "data/day10.input"
                 (slurp)
-                (string/split-lines)
-                (map #(string/split % #" "))))
+                (s/split-lines)
+                (map #(s/split % #" "))))
 
 (defn lookup-cycles [[c _]] (contains? #{20 60 100 140 180 220} c))
 
@@ -43,4 +43,4 @@
 
 ; part 2
 (doseq [row (draw crt cpu-states)]
-  (println (string/join row)))
+  (println (s/join row)))

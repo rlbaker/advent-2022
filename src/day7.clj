@@ -1,10 +1,10 @@
 (ns day7
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as s]))
 
 (def input (->> "data/day7.input"
                 (slurp)
-                (string/split-lines)
-                (map #(string/split % #" "))))
+                (s/split-lines)
+                (map #(s/split % #" "))))
 
 (defn update-pos [pos dir]
   (case dir
@@ -14,7 +14,7 @@
 (defn add-size [fs pos size]
   (if (empty? pos)
     fs
-    (let [path (string/join "/" pos)
+    (let [path (s/join "/" pos)
           fs (update fs path #(vec (conj % size)))]
       (recur fs (pop pos) size))))
 

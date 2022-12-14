@@ -1,13 +1,13 @@
 (ns day14
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as s]))
 
-(defn split-points [line] (string/split line #" -> "))
-(defn split-coords [points] (map #(string/split % #",") points))
+(defn split-points [line] (s/split line #" -> "))
+(defn split-coords [points] (map #(s/split % #",") points))
 (defn to-int [[x y]] [(parse-long x) (parse-long y)])
 (defn parse-points [points] (map to-int points))
 
 (def input (->> (slurp "data/day14.input")
-                (string/split-lines)
+                (s/split-lines)
                 (map split-points)
                 (map split-coords)
                 (map parse-points)))

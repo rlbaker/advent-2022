@@ -1,9 +1,9 @@
 (ns day12
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as s]))
 
 (def input
   (->> (slurp "data/day12.input")
-       (string/split-lines)
+       (s/split-lines)
        (mapv vec)))
 
 (def height (count input))

@@ -1,9 +1,9 @@
 (ns day1
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as s]))
 
 (def input
-  (map string/split-lines
-       (string/split (slurp "data/day1.input") #"\n\n")))
+  (map s/split-lines
+       (s/split (slurp "data/day1.input") #"\n\n")))
 
 (defn sum-cals [cals]
   (reduce + (map parse-long cals)))
