@@ -18,7 +18,6 @@
                  (conj [(+ c 1) x])
                  (conj [(+ c 2) (+ x (parse-long v))])))))
 
-
 (def cpu-states (reduce run [[1 1]] input))
 
 ; part 1
@@ -44,4 +43,4 @@
 
 ; part 2
 (doseq [row (draw crt cpu-states)]
-  (println (str row)))
+  (println (string/join row)))
