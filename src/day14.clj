@@ -25,7 +25,7 @@
 (defn applyf [f pos m] (apply f (map pos (keys m))))
 
 (def spout [500 0])
-(def init (sorted-map spout "+"))
+(def init {spout "+"})
 (def wall-points (mapcat points input))
 (def grid (into init (map vector wall-points (repeat "#"))))
 (def min-x (applyf min first grid))
@@ -33,7 +33,6 @@
 (def max-x (+ (applyf max first grid) 1))
 (def max-y (+ (applyf max second grid) 1))
 
-(defn project [min-x [x y]] [y (- x min-x)])
 (defn kv [grid k] [k (grid k)])
 
 (defn move [grid [x y]]
@@ -73,6 +72,7 @@
       (and (= result :drop) (= y 0)) :done
       (= y max-y) :drop
       :else result)))
+
 
 (println (run part1))
 (println (+ (run part2) 1))
