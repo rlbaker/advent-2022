@@ -1,16 +1,15 @@
-(ns day15
-  (:require [clojure.set :as s]))
+(ns day15)
 
 (def input (->> (slurp "data/day15.input")
                 (re-seq #"-?\d+")
                 (map parse-long)
                 (partition 4)))
 
-(defn dist [sx sy bx by]
-  (+ (abs (- sx bx))
-     (abs (- sy by))))
+(defn dist [[x1 y1] [x2 y2]]
+  (+ (abs (- x1 x2))
+     (abs (- y1 y2))))
 
-(defn parse-sensors [m [sx sy bx by]] (assoc m [sx sy] (dist sx sy bx by)))
+(defn parse-sensors [m [sx sy bx by]] (assoc m [sx sy] (dist [sx sy] [bx by])))
 (defn parse-beacons [s [_ _ x y]] (conj s [x y]))
 
 (def sensors (reduce parse-sensors {} input))
@@ -19,11 +18,11 @@
 (def min-x (- (reduce (fn [x [sx _ bx _]] (min x sx bx)) 0 input) max-d))
 (def max-x (+ (reduce (fn [x [sx _ bx _]] (max x sx bx)) 0 input) max-d))
 
-(defn check [x y]
+(defn check [pos]
   (reduce
-    (fn [b [[sx sy] d]]
-      (or b (and (<= (dist x y sx sy) d)
-                 (not (contains? beacons [x y])))))
+    (fn [acc [sensor d]]
+      (or acc (and (<= (dist pos sensor) d)
+                   (not (contains? beacons pos)))))
     false
     sensors))
 
@@ -32,7 +31,7 @@
          n 0]
    (cond
      (> x max-x) n
-     (check x 2000000) (recur (inc x) (inc n))
+     (check [x 2000000]) (recur (inc x) (inc n))
      :else (recur (inc x) n))))
 
 (defn get-range [y [[sx sy] d]]
@@ -48,29 +47,21 @@
            last-covered 0
            [[start end] & ranges] ranges]
       (cond
-        (nil? start) (first gaps)
-
-        (> start (inc last-covered))
-        (recur (conj gaps [(inc last-covered) (dec start)]) (max last-covered end) ranges)
-        
-        :else
-        (recur gaps (max last-covered end) ranges)))))
+        (nil? start) nil
+        (> start (inc last-covered)) (inc last-covered)
+        :else (recur gaps (max last-covered end) ranges)))))
 
 (defn find-signal []
   (loop [y 0]
-    (let [gaps (find-gaps y)]
+    (let [gap (find-gaps y)]
       (cond
-        (some? gaps) [(first gaps) y]
+        (some? gap) [gap y]
         (= y 4000000) nil
         :else (recur (inc y))))))
 
 ; part 1
 (println (find-covered))
 
-; (println (count (filter identity (for [x (range min-x max-x)] (check x 2000000)))))
-
 ; part 2
 (let [[x y] (find-signal)]
   (println (+ (* x 4000000) y))) 
-    
-    
