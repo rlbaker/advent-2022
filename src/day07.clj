@@ -1,7 +1,7 @@
-(ns day7
+(ns day07
   (:require [clojure.string :as s]))
 
-(def input (->> "data/day7.input"
+(def input (->> "data/day07.input"
                 (slurp)
                 (s/split-lines)
                 (map #(s/split % #" "))))

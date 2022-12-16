@@ -1,4 +1,4 @@
-(ns day5
+(ns day05
   (:require [clojure.string :as s]))
 
 (defn read-blocks [line] (mapv (vec line) (range 1 (count line) 4)))
@@ -39,7 +39,7 @@
 (defn move-all [n from to]
   [(drop n from) (concat (take n from) to)])
 
-(let [[stacks cmds] (parse (slurp "data/day5.input"))]
+(let [[stacks cmds] (parse (slurp "data/day05.input"))]
   (println (to-str (run stacks cmds move-each))) ; part 1
   (println (to-str (run stacks cmds move-all)))) ; part 2
 

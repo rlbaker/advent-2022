@@ -1,8 +1,8 @@
-(ns day2
+(ns day02
   (:require [clojure.string :as s]))
 
 (def input
-  (map #(s/split % #" ") (s/split-lines (slurp "data/day2.input"))))
+  (map #(s/split % #" ") (s/split-lines (slurp "data/day02.input"))))
 
 (def part1
   {"A" {"X" 4 "Y" 8 "Z" 3}

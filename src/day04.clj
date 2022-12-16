@@ -1,8 +1,7 @@
-(ns day4
+(ns day04
   (:require [clojure.string :as s]))
 
-(def example (s/split-lines (slurp "data/day4.example")))
-(def input (s/split-lines (slurp "data/day4.input")))
+(def input (s/split-lines (slurp "data/day04.input")))
 
 (defn part1 [s1 e1 s2 e2]
   (or (and (<= s1 s2) (>= e1 e2))

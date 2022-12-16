@@ -1,6 +1,6 @@
-(ns day6)
+(ns day06)
 
-(def input (slurp "data/day6.input"))
+(def input (slurp "data/day06.input"))
 
 (defn has-dup [[_ lst]] (< (count (set lst)) (count lst)))
 
