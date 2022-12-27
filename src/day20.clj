@@ -55,9 +55,9 @@
   (loop [curr zero-idx, n 0, values []]
     (let [{:keys [steps next]} (get data curr)]
       (cond
-         (= n 3000) (conj values steps)
-         (or (= n 1000) (= n 2000)) (recur next (inc n) (conj values steps)) 
-         :else (recur next (inc n) values)))))
+        (= n 3000) (conj values steps)
+        (or (= n 1000) (= n 2000)) (recur next (inc n) (conj values steps))
+        :else (recur next (inc n) values)))))
 
 (def part1-data (->> input
                      (map vector (range))
